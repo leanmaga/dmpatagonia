@@ -37,7 +37,7 @@ const Hero = () => (
           <img
             src="/logo.png"
             alt="hero_logo"
-            className="w-[200px] h-[200px] object-contain relative z-10 drop-shadow-2xl"
+            className="w-[100px] h-[100px] lg:w-[200px] lg:h-[200px]  object-contain relative z-10 drop-shadow-2xl"
           />
           <span className="text-white text-6xl font-bold relative z-10 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]">
             +
@@ -45,7 +45,7 @@ const Hero = () => (
           <img
             src="/dmlogo.png"
             alt="hero_logo"
-            className="w-[200px] h-[200px] object-contain relative z-10 drop-shadow-2xl"
+            className="w-[100px] h-[100px] lg:w-[200px] lg:h-[200px] object-contain relative z-10 drop-shadow-2xl"
           />
         </motion.div>
 
