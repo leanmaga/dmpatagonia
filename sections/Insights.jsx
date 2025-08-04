@@ -171,6 +171,7 @@ const Insights = () => {
 
   const getCardStyle = (index) => {
     const position = index - activeIndex;
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
     if (position === 0) {
       return {
@@ -180,15 +181,19 @@ const Insights = () => {
       };
     } else if (position === -1) {
       return {
-        transform: "translateX(-60%) scale(0.8) rotateY(25deg)",
+        transform: isMobile
+          ? "translateX(-80%) scale(0.7) rotateY(15deg)"
+          : "translateX(-60%) scale(0.8) rotateY(25deg)",
         zIndex: 10,
-        opacity: 0.7,
+        opacity: isMobile ? 0.5 : 0.7,
       };
     } else if (position === 1) {
       return {
-        transform: "translateX(60%) scale(0.8) rotateY(-25deg)",
+        transform: isMobile
+          ? "translateX(80%) scale(0.7) rotateY(-15deg)"
+          : "translateX(60%) scale(0.8) rotateY(-25deg)",
         zIndex: 10,
-        opacity: 0.7,
+        opacity: isMobile ? 0.5 : 0.7,
       };
     } else {
       return {
@@ -199,29 +204,87 @@ const Insights = () => {
     }
   };
 
+  // Función para obtener dimensiones responsivas de las cards
+  const getCardDimensions = () => {
+    if (typeof window !== "undefined") {
+      const width = window.innerWidth;
+      if (width < 480) {
+        // Móvil muy pequeño
+        return {
+          width: "280px",
+          height: "500px",
+          marginLeft: "-140px",
+          marginTop: "-250px",
+        };
+      } else if (width < 768) {
+        // Móvil
+        return {
+          width: "320px",
+          height: "550px",
+          marginLeft: "-160px",
+          marginTop: "-275px",
+        };
+      } else if (width < 1024) {
+        // Tablet
+        return {
+          width: "380px",
+          height: "600px",
+          marginLeft: "-190px",
+          marginTop: "-300px",
+        };
+      } else {
+        // Desktop
+        return {
+          width: "420px",
+          height: "650px",
+          marginLeft: "-210px",
+          marginTop: "-325px",
+        };
+      }
+    }
+    // Fallback para SSR
+    return {
+      width: "320px",
+      height: "550px",
+      marginLeft: "-160px",
+      marginTop: "-275px",
+    };
+  };
+
+  const [cardDimensions, setCardDimensions] = useState(getCardDimensions());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setCardDimensions(getCardDimensions());
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <section
-      className="relative overflow-hidden py-20 px-4 bg-gradient-to-b from-slate-900 to-black"
+      className="relative overflow-hidden py-12 sm:py-16 md:py-20 px-4 bg-gradient-to-b from-slate-900 to-black"
       id="paquetes"
     >
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header mejorado */}
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="w-16 h-px bg-gradient-to-r from-transparent to-cyan-400" />
-            <span className="text-cyan-400 font-medium tracking-wider uppercase text-sm">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+            <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-r from-transparent to-cyan-400" />
+            <span className="text-cyan-400 font-medium tracking-wider uppercase text-xs sm:text-sm">
               Paquetes Integrados
             </span>
-            <div className="w-16 h-px bg-gradient-to-l from-transparent to-cyan-400" />
+            <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-l from-transparent to-cyan-400" />
           </div>
 
-          <h2 className="text-5xl font-bold mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
             <span className="bg-gradient-to-r from-white via-cyan-200 to-blue-200 bg-clip-text text-transparent">
               Web + Marketing
             </span>
@@ -231,7 +294,7 @@ const Insights = () => {
             </span>
           </h2>
 
-          <p className="text-lg text-gray-300 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-4xl mx-auto leading-relaxed px-4">
             <span className="text-cyan-400 font-semibold">
               ¿Por qué elegir entre desarrollo web o marketing digital?
             </span>
@@ -246,38 +309,47 @@ const Insights = () => {
           </p>
 
           {/* Value proposition */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-4 border border-slate-700/50">
-              <div className="text-cyan-400 font-bold text-xl mb-1">
+          <div className="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 max-w-4xl mx-auto px-4">
+            <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-slate-700/50">
+              <div className="text-cyan-400 font-bold text-lg sm:text-xl mb-1">
                 Ahorro 30%
               </div>
-              <div className="text-gray-300 text-sm">
+              <div className="text-gray-300 text-xs sm:text-sm">
                 vs. contratar por separado
               </div>
             </div>
-            <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-4 border border-slate-700/50">
-              <div className="text-purple-400 font-bold text-xl mb-1">
+            <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-slate-700/50">
+              <div className="text-purple-400 font-bold text-lg sm:text-xl mb-1">
                 Estrategia Unificada
               </div>
-              <div className="text-gray-300 text-sm">
+              <div className="text-gray-300 text-xs sm:text-sm">
                 Web y marketing alineados
               </div>
             </div>
-            <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-4 border border-slate-700/50">
-              <div className="text-green-400 font-bold text-xl mb-1">
+            <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-slate-700/50">
+              <div className="text-green-400 font-bold text-lg sm:text-xl mb-1">
                 1 Solo Equipo
               </div>
-              <div className="text-gray-300 text-sm">Comunicación directa</div>
+              <div className="text-gray-300 text-xs sm:text-sm">
+                Comunicación directa
+              </div>
             </div>
           </div>
         </div>
 
         {/* Carousel 3D */}
         <div
-          className="relative w-full max-w-6xl mx-auto mb-12 select-none"
+          className="relative w-full max-w-6xl mx-auto mb-8 sm:mb-12 select-none"
           style={{
             perspective: "1200px",
-            height: "700px",
+            height:
+              typeof window !== "undefined" && window.innerWidth < 480
+                ? "520px"
+                : typeof window !== "undefined" && window.innerWidth < 768
+                ? "570px"
+                : typeof window !== "undefined" && window.innerWidth < 1024
+                ? "620px"
+                : "700px",
           }}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
@@ -343,10 +415,7 @@ const Insights = () => {
                 className="absolute top-1/2 left-1/2 cursor-pointer"
                 style={{
                   ...cardStyle,
-                  width: "420px",
-                  height: "650px",
-                  marginLeft: "-210px",
-                  marginTop: "-325px",
+                  ...cardDimensions,
                   transformOrigin: "center center",
                   transformStyle: "preserve-3d",
                   transition: "all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
@@ -358,8 +427,8 @@ const Insights = () => {
               >
                 {/* Popular badge */}
                 {pkg.popular && isActive && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-30">
-                    <span className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-2 rounded-full text-sm font-semibold shadow-lg animate-pulse">
+                  <div className="absolute -top-2 sm:-top-3 md:-top-4 left-1/2 transform -translate-x-1/2 z-30 px-2">
+                    <span className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-2 sm:px-4 md:px-6 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm font-semibold shadow-lg animate-pulse whitespace-nowrap">
                       🔥 {pkg.badge}
                     </span>
                   </div>
@@ -372,7 +441,7 @@ const Insights = () => {
                       ? "border-cyan-400/60 shadow-cyan-500/30"
                       : "border-slate-700/50"
                   } 
-                  rounded-2xl shadow-2xl transition-all duration-700 flex flex-col overflow-hidden
+                  rounded-xl sm:rounded-2xl shadow-2xl transition-all duration-700 flex flex-col overflow-hidden
                   ${
                     isActive
                       ? "hover:shadow-cyan-500/30 hover:border-cyan-400/70"
@@ -381,66 +450,91 @@ const Insights = () => {
                 `}
                 >
                   {/* Package header */}
-                  <div className="text-center p-6 pb-4">
-                    <div className="mb-3">
-                      <span className="bg-gradient-to-r from-slate-600 to-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">
+                  <div className="text-center p-3 sm:p-4 md:p-6 pb-2 sm:pb-4">
+                    <div className="mb-2 sm:mb-3">
+                      <span className="bg-gradient-to-r from-slate-600 to-slate-700 text-gray-300 px-2 sm:px-3 py-1 rounded-full text-xs font-medium">
                         {pkg.badge}
                       </span>
                     </div>
 
+                    {/* Package Name - Escalado progresivo */}
                     <h3
-                      className={`${
-                        isActive ? "text-2xl" : "text-lg"
-                      } font-bold text-white mb-2`}
+                      className={`font-bold text-white mb-2 ${
+                        isActive
+                          ? "text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl" // Escalado progresivo real
+                          : "text-sm sm:text-base md:text-lg lg:text-xl"
+                      }`}
                     >
                       {pkg.name}
                     </h3>
 
+                    {/* Subtitle - Escalado progresivo */}
                     <p
-                      className={`text-gray-400 ${
-                        isActive ? "text-sm" : "text-xs"
-                      } mb-4 leading-relaxed`}
+                      className={`text-gray-400 mb-3 sm:mb-4 leading-relaxed px-2 ${
+                        isActive
+                          ? "text-sm sm:text-base md:text-lg lg:text-xl" // Escalado progresivo
+                          : "text-xs sm:text-sm md:text-base"
+                      }`}
                     >
                       {pkg.subtitle}
                     </p>
 
-                    <div className="mb-4">
+                    {/* Price section - Escalado progresivo */}
+                    <div className="mb-3 sm:mb-4">
                       <div className="flex items-center justify-center gap-2 mb-1">
-                        <span className="text-gray-500 line-through text-lg">
+                        <span
+                          className={`text-gray-500 line-through ${
+                            isActive
+                              ? "text-base sm:text-lg md:text-xl lg:text-2xl"
+                              : "text-sm sm:text-base md:text-lg"
+                          }`}
+                        >
                           {pkg.originalPrice}
                         </span>
-                        <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                        <span className="bg-red-500 text-white px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm md:text-4xl lg:text-6xl font-bold">
                           AHORRO
                         </span>
                       </div>
-                      <span
-                        className={`${
-                          isActive ? "text-4xl" : "text-2xl"
-                        } font-bold bg-gradient-to-r ${
-                          pkg.color
-                        } bg-clip-text text-transparent`}
-                      >
-                        {pkg.price}
-                      </span>
-                      <span className="text-gray-400 text-sm ml-1">USD</span>
+                      <div className="flex items-center justify-center">
+                        <span
+                          className={`font-bold bg-gradient-to-r ${
+                            pkg.color
+                          } bg-clip-text text-transparent ${
+                            isActive
+                              ? "text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl" // Escalado progresivo dramático
+                              : "text-xl sm:text-2xl md:text-3xl lg:text-4xl"
+                          }`}
+                        >
+                          {pkg.price}
+                        </span>
+                        <span
+                          className={`text-gray-400 ml-1 ${
+                            isActive
+                              ? "text-sm sm:text-base md:text-lg lg:text-xl"
+                              : "text-xs sm:text-sm"
+                          }`}
+                        >
+                          USD
+                        </span>
+                      </div>
                     </div>
 
                     {/* Deliverables preview */}
                     {isActive && (
-                      <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div className="bg-cyan-500/10 rounded-lg p-2 border border-cyan-500/20">
-                          <div className="text-cyan-400 font-semibold mb-1">
+                      <div className="grid grid-cols-2 gap-1.5 sm:gap-2 text-xs">
+                        <div className="bg-cyan-500/10 rounded-lg p-1.5 sm:p-2 border border-cyan-500/20">
+                          <div className="text-cyan-400 font-semibold mb-1 text-sm sm:text-base md:text-lg">
                             🌐 Web Dev
                           </div>
-                          <div className="text-gray-300">
+                          <div className="text-gray-300 text-xs sm:text-sm md:text-base leading-tight">
                             {pkg.deliverables.web}
                           </div>
                         </div>
-                        <div className="bg-purple-500/10 rounded-lg p-2 border border-purple-500/20">
-                          <div className="text-purple-400 font-semibold mb-1">
+                        <div className="bg-purple-500/10 rounded-lg p-1.5 sm:p-2 border border-purple-500/20">
+                          <div className="text-purple-400 font-semibold mb-1 text-sm sm:text-base md:text-lg">
                             📈 Marketing
                           </div>
-                          <div className="text-gray-300">
+                          <div className="text-gray-300 text-xs sm:text-sm md:text-base leading-tight">
                             {pkg.deliverables.marketing}
                           </div>
                         </div>
@@ -449,24 +543,28 @@ const Insights = () => {
                   </div>
 
                   {/* Features list */}
-                  <div className="flex-1 px-6 pb-4 overflow-y-auto">
-                    <ul className="space-y-2">
+                  <div className="flex-1 px-3 sm:px-4 md:px-6 pb-2 sm:pb-4 overflow-y-auto">
+                    <ul className="space-y-1.5 sm:space-y-2">
                       {pkg.features.map((feature, featureIndex) => (
                         <li
                           key={featureIndex}
                           className="flex items-start gap-2"
                         >
                           <div
-                            className={`${
-                              isActive ? "w-3 h-3" : "w-2.5 h-2.5"
-                            } rounded-full bg-gradient-to-r ${
+                            className={`rounded-full bg-gradient-to-r ${
                               pkg.color
-                            } flex items-center justify-center flex-shrink-0 mt-1.5`}
+                            } flex items-center justify-center flex-shrink-0 mt-1 ${
+                              isActive
+                                ? "w-2.5 h-2.5 sm:w-3 sm:h-3"
+                                : "w-2 h-2 sm:w-2.5 sm:h-2.5"
+                            }`}
                           >
                             <svg
-                              className={`${
-                                isActive ? "w-2 h-2" : "w-1.5 h-1.5"
-                              } text-white`}
+                              className={`text-white ${
+                                isActive
+                                  ? "w-1.5 h-1.5 sm:w-2 sm:h-2"
+                                  : "w-1 h-1 sm:w-1.5 sm:h-1.5"
+                              }`}
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -479,10 +577,13 @@ const Insights = () => {
                               />
                             </svg>
                           </div>
+                          {/* Features text - Escalado progresivo */}
                           <span
-                            className={`text-gray-300 ${
-                              isActive ? "text-sm" : "text-xs"
-                            } leading-relaxed`}
+                            className={`text-gray-300 leading-relaxed ${
+                              isActive
+                                ? "text-sm sm:text-base md:text-lg lg:text-xl" // Escalado progresivo real
+                                : "text-xs sm:text-sm md:text-base"
+                            }`}
                           >
                             {feature}
                           </span>
@@ -492,7 +593,7 @@ const Insights = () => {
                   </div>
 
                   {/* CTA Button */}
-                  <div className="p-6 pt-2">
+                  <div className="p-3 sm:p-4 md:p-6 pt-1 sm:pt-2">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -502,14 +603,14 @@ const Insights = () => {
                           setActiveIndex(index);
                         }
                       }}
-                      className={`w-full rounded-xl font-semibold text-white bg-gradient-to-r ${
+                      className={`w-full rounded-lg sm:rounded-xl font-semibold text-white bg-gradient-to-r ${
                         pkg.color
-                      } shadow-lg transition-all duration-300
+                      } shadow-lg transition-all duration-300 transform flex items-center justify-center gap-2 sm:gap-3 relative overflow-hidden
                         ${
                           isActive
-                            ? "py-4 px-4 text-base hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25"
-                            : "py-2 px-3 text-xs opacity-75"
-                        } transform flex items-center justify-center gap-3 relative overflow-hidden`}
+                            ? "py-2.5 sm:py-3 md:py-4 lg:py-5 px-3 sm:px-4 text-base sm:text-lg md:text-xl lg:text-2xl hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25"
+                            : "py-1.5 sm:py-2 px-2 sm:px-3 text-sm sm:text-base md:text-lg opacity-75"
+                        }`}
                     >
                       {isActive && (
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 animate-pulse"></div>
@@ -517,7 +618,7 @@ const Insights = () => {
 
                       {isActive && (
                         <svg
-                          className="w-6 h-6 relative z-10"
+                          className="w-4 h-4 sm:w-5 md:w-6 sm:h-5 md:h-6 relative z-10"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
@@ -539,8 +640,8 @@ const Insights = () => {
         {/* Navigation indicators */}
         <div className="text-center">
           {/* Mobile swipe indicator */}
-          <div className="mb-6 block xl:hidden">
-            <p className="text-gray-400 text-sm flex items-center justify-center gap-2">
+          <div className="mb-4 sm:mb-6 block xl:hidden">
+            <p className="text-gray-400 text-xs sm:text-sm flex items-center justify-center gap-2">
               <span className="animate-bounce">👈</span>
               Desliza para ver todos los paquetes
               <span className="animate-bounce">👉</span>
@@ -548,7 +649,7 @@ const Insights = () => {
           </div>
 
           {/* Desktop keyboard indicator */}
-          <div className="mb-6 hidden xl:block">
+          <div className="mb-4 sm:mb-6 hidden xl:block">
             <p className="text-gray-500 text-xs flex items-center justify-center gap-2">
               <span>←</span> Usa las flechas del teclado para navegar{" "}
               <span>→</span>
@@ -556,12 +657,12 @@ const Insights = () => {
           </div>
 
           {/* Dots indicators */}
-          <div className="flex justify-center gap-3 mb-8">
+          <div className="flex justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
             {fusionPackages.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
                   index === activeIndex
                     ? "bg-cyan-400 scale-125 shadow-lg shadow-cyan-400/50"
                     : "bg-gray-600 hover:bg-gray-400"

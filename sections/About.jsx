@@ -36,7 +36,7 @@ const About = () => {
         initial="hidden"
         whileInView="show"
         viewport={{ once: false, amount: 0.25 }}
-        className={`${styles.innerWidth} mx-auto flex flex-col justify-center items-center relative z-10 min-h-[100vh] py-20`}
+        className={`${styles.innerWidth} mx-auto flex flex-col justify-center items-center relative z-10 min-h-[100vh] py-20 p-10`}
       >
         <motion.div
           variants={containerVariants}
@@ -44,19 +44,19 @@ const About = () => {
         >
           {/* Indicador con línea */}
           <motion.div
-            className="flex items-center justify-center gap-4 mb-8"
+            className="flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8"
             variants={itemVariants}
           >
-            <div className="w-16 h-px bg-gradient-to-r from-transparent to-cyan-400" />
-            <span className="text-cyan-400 font-medium tracking-wider uppercase text-sm">
+            <div className="w-8 sm:w-16 h-px bg-gradient-to-r from-transparent to-cyan-400" />
+            <span className="text-cyan-400 font-medium tracking-wider uppercase text-xs sm:text-sm">
               Dos Pasiones, Una Visión
             </span>
-            <div className="w-16 h-px bg-gradient-to-l from-transparent to-purple-400" />
+            <div className="w-8 sm:w-16 h-px bg-gradient-to-l from-transparent to-purple-400" />
           </motion.div>
 
-          {/* Título principal */}
+          {/* Título principal - Más pequeño en móvil */}
           <motion.h2
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8"
+            className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8"
             variants={itemVariants}
           >
             <span className="bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent">
@@ -68,12 +68,15 @@ const About = () => {
             </span>
           </motion.h2>
 
-          {/* Subtítulo destacado fusionado */}
-          <motion.div className="relative mb-12" variants={itemVariants}>
+          {/* Subtítulo destacado fusionado - Responsivo */}
+          <motion.div
+            className="relative mb-6 sm:mb-8 md:mb-12"
+            variants={itemVariants}
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-xl rounded-2xl" />
-            <blockquote className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-cyan-400/30 rounded-2xl p-8 shadow-2xl">
+            <blockquote className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl border border-cyan-400/30 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 shadow-2xl">
               <motion.h3
-                className="text-xl md:text-2xl lg:text-3xl font-semibold text-white leading-relaxed"
+                className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-semibold text-white leading-relaxed"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5 }}
@@ -93,23 +96,23 @@ const About = () => {
                 ."
               </motion.h3>
 
-              {/* Comillas decorativas */}
-              <div className="absolute -top-4 -left-4 text-6xl text-cyan-400/30 font-serif">
+              {/* Comillas decorativas - Más pequeñas en móvil */}
+              <div className="absolute -top-2 sm:-top-4 -left-2 sm:-left-4 text-4xl sm:text-6xl text-cyan-400/30 font-serif">
                 "
               </div>
-              <div className="absolute -bottom-8 -right-4 text-6xl text-purple-400/30 font-serif">
+              <div className="absolute -bottom-4 sm:-bottom-8 -right-2 sm:-right-4 text-4xl sm:text-6xl text-purple-400/30 font-serif">
                 "
               </div>
             </blockquote>
           </motion.div>
 
-          {/* Historia de la fusión */}
+          {/* Historia de la fusión - Texto más pequeño en móvil */}
           <motion.div
-            className="space-y-6 max-w-4xl mb-12"
+            className="space-y-4 sm:space-y-6 max-w-4xl mb-8 sm:mb-12 px-4 sm:px-0"
             variants={itemVariants}
           >
             <motion.p
-              className="text-lg md:text-xl text-gray-300 leading-relaxed"
+              className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-300 leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
@@ -127,7 +130,7 @@ const About = () => {
             </motion.p>
 
             <motion.p
-              className="text-lg md:text-xl text-gray-300 leading-relaxed"
+              className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-300 leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
@@ -144,7 +147,7 @@ const About = () => {
             </motion.p>
 
             <motion.p
-              className="text-lg md:text-xl text-gray-300 leading-relaxed"
+              className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-300 leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1 }}
