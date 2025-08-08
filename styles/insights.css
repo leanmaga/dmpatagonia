@@ -1,10 +1,10 @@
 :root {
   /* Variables de altura del carousel - Optimizadas para móvil */
-  --carousel-height-xs: 500px;
-  --carousel-height-sm: 550px;
-  --carousel-height-md: 650px;
-  --carousel-height-lg: 750px;
-  --carousel-height-xl: 850px;
+  --carousel-height-xs: 480px;
+  --carousel-height-sm: 520px;
+  --carousel-height-md: 620px;
+  --carousel-height-lg: 720px;
+  --carousel-height-xl: 820px;
 
   /* Variables de ancho de tarjetas - Más pequeñas para móvil */
   --card-width-xs: 260px;
@@ -13,12 +13,12 @@
   --card-width-lg: 450px;
   --card-width-xl: 500px;
 
-  /* Variables de altura de tarjetas - Optimizadas */
-  --card-height-xs: 480px;
-  --card-height-sm: 520px;
-  --card-height-md: 580px;
-  --card-height-lg: 680px;
-  --card-height-xl: 750px;
+  /* Variables de altura de tarjetas - Optimizadas para mejor visibilidad */
+  --card-height-xs: 450px;
+  --card-height-sm: 490px;
+  --card-height-md: 560px;
+  --card-height-lg: 660px;
+  --card-height-xl: 730px;
 }
 
 /* ==============================================

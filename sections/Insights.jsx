@@ -723,8 +723,8 @@ const Insights = () => {
           </div>
         </div>
 
-        {/* Indicadores de navegación - Mejorados para móvil */}
-        <div className="flex justify-center gap-3 mt-6">
+        {/* Indicadores de navegación - Optimizados para móvil */}
+        <div className="flex justify-center gap-2 mt-4">
           {fusionPackages.map((_, index) => (
             <button
               key={index}
@@ -733,8 +733,8 @@ const Insights = () => {
                 rounded-full transition-all duration-300
                 ${
                   index === activeIndex
-                    ? "w-8 h-3 bg-gradient-to-r from-cyan-400 to-purple-400"
-                    : "w-3 h-3 bg-gray-600 hover:bg-gray-400"
+                    ? "w-6 h-2 md:w-8 md:h-3 bg-gradient-to-r from-cyan-400 to-purple-400"
+                    : "w-2 h-2 md:w-3 md:h-3 bg-gray-600 hover:bg-gray-400"
                 }
               `}
               aria-label={`Ir al paquete ${index + 1}`}
