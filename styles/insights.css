@@ -1,21 +1,24 @@
 :root {
-  --carousel-height-xs: 600px;
-  --carousel-height-sm: 650px;
-  --carousel-height-md: 750px;
-  --carousel-height-lg: 850px;
-  --carousel-height-xl: 900px;
+  /* Variables de altura del carousel - Optimizadas para móvil */
+  --carousel-height-xs: 500px;
+  --carousel-height-sm: 550px;
+  --carousel-height-md: 650px;
+  --carousel-height-lg: 750px;
+  --carousel-height-xl: 850px;
 
-  --card-width-xs: 280px;
-  --card-width-sm: 320px;
-  --card-width-md: 400px;
-  --card-width-lg: 470px;
-  --card-width-xl: 520px;
+  /* Variables de ancho de tarjetas - Más pequeñas para móvil */
+  --card-width-xs: 260px;
+  --card-width-sm: 300px;
+  --card-width-md: 380px;
+  --card-width-lg: 450px;
+  --card-width-xl: 500px;
 
-  --card-height-xs: 550px;
-  --card-height-sm: 580px;
-  --card-height-md: 650px;
-  --card-height-lg: 750px;
-  --card-height-xl: 820px;
+  /* Variables de altura de tarjetas - Optimizadas */
+  --card-height-xs: 480px;
+  --card-height-sm: 520px;
+  --card-height-md: 580px;
+  --card-height-lg: 680px;
+  --card-height-xl: 750px;
 }
 
 /* ==============================================
@@ -25,32 +28,48 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: clamp(3rem, 8vw, 6rem) 0;
+  padding: clamp(2rem, 6vw, 4rem) 0;
 }
 
 .insights-container {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: clamp(3rem, 6vw, 5rem);
+  gap: clamp(2rem, 5vw, 4rem);
   max-width: 1400px;
   margin: 0 auto;
-  padding: clamp(1rem, 4vw, 2rem);
+  padding: clamp(1rem, 3vw, 2rem);
   width: 100%;
 }
 
 .insights-header {
   display: grid;
-  gap: clamp(1rem, 3vw, 2rem);
+  gap: clamp(1rem, 2.5vw, 2rem);
   text-align: center;
   justify-items: center;
 }
 
 .insights-value-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: clamp(0.75rem, 2vw, 1rem);
   max-width: 800px;
   width: 100%;
+}
+
+/* Mobile first approach para value grid */
+@media (max-width: 480px) {
+  .insights-value-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .insights-value-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
 }
 
 /* ==============================================
@@ -63,6 +82,7 @@
   min-height: var(--carousel-height-xs);
   position: relative;
   width: 100%;
+  padding: 0 clamp(1rem, 3vw, 2rem);
 }
 
 .carousel-3d {
@@ -70,7 +90,7 @@
   width: 100%;
   max-width: 1200px;
   height: var(--carousel-height-xs);
-  perspective: 1500px;
+  perspective: 1200px;
   perspective-origin: center center;
   display: flex;
   align-items: center;
@@ -87,9 +107,17 @@
   margin-top: calc(var(--card-height-xs) / -2);
   transform-origin: center center;
   transform-style: preserve-3d;
-  transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
   will-change: transform;
+}
+
+/* Simplificar en móvil */
+@media (max-width: 768px) {
+  .carousel-card {
+    transition: all 0.5s ease-out;
+    transform-style: flat;
+  }
 }
 
 .carousel-card.dragging {
@@ -101,48 +129,43 @@
   height: 100%;
   background: linear-gradient(
     135deg,
-    rgba(51, 65, 85, 0.6) 0%,
-    rgba(15, 23, 42, 0.8) 100%
-  );
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  border-radius: clamp(0.75rem, 2vw, 1.5rem);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  overflow: hidden;
-  transition: all 0.7s ease;
-}
-
-.card-content:hover {
-  border-color: rgba(6, 182, 212, 0.6);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9),
-    0 0 30px rgba(6, 182, 212, 0.3);
-  transform: translateY(-2px);
-}
-
-.card-content.inactive {
-  background: linear-gradient(
-    135deg,
-    rgba(51, 65, 85, 0.4) 0%,
-    rgba(15, 23, 42, 0.6) 100%
-  );
-}
-
-.card-content.inactive:hover {
-  background: linear-gradient(
-    135deg,
     rgba(51, 65, 85, 0.7) 0%,
     rgba(15, 23, 42, 0.9) 100%
   );
-  border-color: rgba(148, 163, 184, 0.8);
-  transform: translateY(-1px) scale(1.02);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  border-radius: clamp(0.75rem, 2vw, 1.5rem);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.7);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.card-content:hover {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.8),
+    0 0 25px rgba(6, 182, 212, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Simplificar efectos en móvil */
+@media (max-width: 768px) {
+  .card-content {
+    backdrop-filter: blur(8px);
+    box-shadow: 0 15px 30px -8px rgba(0, 0, 0, 0.6);
+  }
+
+  .card-content:hover {
+    transform: none;
+    box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.7);
+  }
 }
 
 .card-header {
   display: grid;
-  gap: clamp(0.5rem, 1.5vw, 1rem);
-  padding: clamp(0.75rem, 3vw, 2rem);
+  gap: clamp(0.5rem, 1.2vw, 1rem);
+  padding: clamp(1rem, 2.5vw, 2rem);
   text-align: center;
   justify-items: center;
 }
@@ -151,11 +174,12 @@
   display: grid;
   padding: clamp(0.75rem, 2vw, 1.25rem);
   overflow-y: auto;
+  margin: 0 clamp(0.25rem, 1vw, 0.5rem);
 }
 
 .features-list {
   display: grid;
-  gap: clamp(0.5rem, 1.5vw, 1rem);
+  gap: clamp(0.4rem, 1.2vw, 0.8rem);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -164,45 +188,34 @@
 .feature-item {
   display: flex;
   align-items: flex-start;
-  gap: clamp(0.5rem, 1.5vw, 1rem);
+  gap: clamp(0.5rem, 1.2vw, 0.8rem);
+  padding: clamp(0.2rem, 0.5vw, 0.4rem) 0;
 }
 
 .card-cta {
-  padding: clamp(0.75rem, 3vw, 2rem);
-  padding-top: clamp(0.25rem, 1vw, 1rem);
+  padding: clamp(1rem, 2.5vw, 2rem);
+  padding-top: clamp(0.5rem, 1vw, 1rem);
 }
 
 /* ==============================================
            NAVEGACIÓN RESPONSIVE
         ============================================== */
-.carousel-navigation {
-  display: grid;
-  gap: clamp(1rem, 2vw, 1.5rem);
-  justify-items: center;
-}
-
-.nav-indicators {
-  display: flex;
-  justify-content: center;
-  gap: clamp(0.5rem, 1.5vw, 0.75rem);
-}
-
 .nav-buttons {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 30;
-  background: rgba(51, 65, 85, 0.6);
+  background: rgba(51, 65, 85, 0.7);
   backdrop-filter: blur(8px);
   color: white;
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 50%;
   border: none;
   cursor: pointer;
   opacity: 0.7;
   transition: all 0.3s ease;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,24 +223,71 @@
 
 .nav-buttons:hover {
   opacity: 1;
-  background: rgba(51, 65, 85, 0.8);
+  background: rgba(51, 65, 85, 0.9);
   transform: translateY(-50%) scale(1.1);
 }
 
 .nav-buttons.prev {
-  left: -5rem;
+  left: -4rem;
 }
 
 .nav-buttons.next {
-  right: -5rem;
+  right: -4rem;
 }
 
 /* ==============================================
-           BREAKPOINTS RESPONSIVE
+           BREAKPOINTS RESPONSIVE OPTIMIZADOS
         ============================================== */
 
-/* Small Mobile */
-@media (min-width: 480px) {
+/* Extra Small Mobile (320px-479px) */
+@media (max-width: 479px) {
+  .insights-section {
+    padding: 1.5rem 0;
+  }
+
+  .insights-container {
+    gap: 1.5rem;
+    padding: 0.75rem;
+  }
+
+  .carousel-container {
+    min-height: 450px;
+    padding: 0 0.5rem;
+  }
+
+  .carousel-3d {
+    height: 450px;
+  }
+
+  .carousel-card {
+    width: 240px;
+    height: 420px;
+    margin-left: -120px;
+    margin-top: -210px;
+  }
+
+  .card-header {
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .card-features {
+    padding: 0.75rem;
+    margin: 0 0.25rem;
+  }
+
+  .features-list {
+    gap: 0.4rem;
+  }
+
+  .card-cta {
+    padding: 1rem;
+    padding-top: 0.5rem;
+  }
+}
+
+/* Small Mobile (480px-767px) */
+@media (min-width: 480px) and (max-width: 767px) {
   .carousel-container {
     min-height: var(--carousel-height-sm);
   }
@@ -244,7 +304,7 @@
   }
 }
 
-/* Tablet */
+/* Tablet (768px-1023px) */
 @media (min-width: 768px) {
   .carousel-container {
     min-height: var(--carousel-height-md);
@@ -266,7 +326,7 @@
   }
 }
 
-/* Laptop */
+/* Laptop (1024px-1279px) */
 @media (min-width: 1024px) {
   .carousel-container {
     min-height: var(--carousel-height-lg);
@@ -284,7 +344,7 @@
   }
 }
 
-/* Desktop */
+/* Desktop (1280px+) */
 @media (min-width: 1280px) {
   .carousel-container {
     min-height: var(--carousel-height-xl);
@@ -302,158 +362,147 @@
   }
 }
 
-/* Ocultar botones de navegación en móvil */
-@media (max-width: 1279px) {
+/* Ocultar botones de navegación en móvil y tablet */
+@media (max-width: 1023px) {
   .nav-buttons {
     display: none;
   }
 }
 
 /* ==============================================
-           EFECTOS GRÁFICOS NEÓN (MANTENER EN JS)
+           SCROLLBARS PERSONALIZADAS
         ============================================== */
 .neon-scrollbar-green::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 .neon-scrollbar-green::-webkit-scrollbar-track {
   background: rgba(16, 185, 129, 0.1);
-  border-radius: 15px;
-  box-shadow: inset 0 0 5px rgba(16, 185, 129, 0.2);
+  border-radius: 12px;
+  box-shadow: inset 0 0 3px rgba(16, 185, 129, 0.2);
 }
 .neon-scrollbar-green::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #10b981, #059669);
-  border-radius: 15px;
-  box-shadow: 0 0 10px #10b981, 0 0 20px #10b981, 0 0 30px #10b981,
-    inset 0 0 10px rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 0 8px #10b981, 0 0 16px #10b981,
+    inset 0 0 8px rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(16, 185, 129, 0.3);
 }
 .neon-scrollbar-green::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #059669, #047857);
-  box-shadow: 0 0 20px #10b981, 0 0 35px #10b981, 0 0 50px #10b981,
-    inset 0 0 15px rgba(255, 255, 255, 0.2);
-  animation: neon-pulse-green 1.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 12px #10b981, 0 0 24px #10b981,
+    inset 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
 .neon-scrollbar-cyan::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 .neon-scrollbar-cyan::-webkit-scrollbar-track {
   background: rgba(6, 182, 212, 0.1);
-  border-radius: 15px;
-  box-shadow: inset 0 0 5px rgba(6, 182, 212, 0.2);
+  border-radius: 12px;
+  box-shadow: inset 0 0 3px rgba(6, 182, 212, 0.2);
 }
 .neon-scrollbar-cyan::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #06b6d4, #0891b2);
-  border-radius: 15px;
-  box-shadow: 0 0 10px #06b6d4, 0 0 20px #06b6d4, 0 0 30px #06b6d4,
-    inset 0 0 10px rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 0 8px #06b6d4, 0 0 16px #06b6d4,
+    inset 0 0 8px rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(6, 182, 212, 0.3);
 }
 .neon-scrollbar-cyan::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #0891b2, #0e7490);
-  box-shadow: 0 0 20px #06b6d4, 0 0 35px #06b6d4, 0 0 50px #06b6d4,
-    inset 0 0 15px rgba(255, 255, 255, 0.2);
-  animation: neon-pulse-cyan 1.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 12px #06b6d4, 0 0 24px #06b6d4,
+    inset 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
 .neon-scrollbar-purple::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 .neon-scrollbar-purple::-webkit-scrollbar-track {
   background: rgba(168, 85, 247, 0.1);
-  border-radius: 15px;
-  box-shadow: inset 0 0 5px rgba(168, 85, 247, 0.2);
+  border-radius: 12px;
+  box-shadow: inset 0 0 3px rgba(168, 85, 247, 0.2);
 }
 .neon-scrollbar-purple::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #a855f7, #9333ea);
-  border-radius: 15px;
-  box-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 30px #a855f7,
-    inset 0 0 10px rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 0 8px #a855f7, 0 0 16px #a855f7,
+    inset 0 0 8px rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(168, 85, 247, 0.3);
 }
 .neon-scrollbar-purple::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #9333ea, #7c3aed);
-  box-shadow: 0 0 20px #a855f7, 0 0 35px #a855f7, 0 0 50px #a855f7,
-    inset 0 0 15px rgba(255, 255, 255, 0.2);
-  animation: neon-pulse-purple 1.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 12px #a855f7, 0 0 24px #a855f7,
+    inset 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
-@keyframes neon-pulse-green {
-  0% {
-    box-shadow: 0 0 20px #10b981, 0 0 35px #10b981, 0 0 50px #10b981;
-  }
-  100% {
-    box-shadow: 0 0 25px #10b981, 0 0 45px #10b981, 0 0 65px #10b981;
-  }
-}
-@keyframes neon-pulse-cyan {
-  0% {
-    box-shadow: 0 0 20px #06b6d4, 0 0 35px #06b6d4, 0 0 50px #06b6d4;
-  }
-  100% {
-    box-shadow: 0 0 25px #06b6d4, 0 0 45px #06b6d4, 0 0 65px #06b6d4;
-  }
-}
-@keyframes neon-pulse-purple {
-  0% {
-    box-shadow: 0 0 20px #a855f7, 0 0 35px #a855f7, 0 0 50px #a855f7;
-  }
-  100% {
-    box-shadow: 0 0 25px #a855f7, 0 0 45px #a855f7, 0 0 65px #a855f7;
+/* Mobile scrollbars más delgadas */
+@media (max-width: 768px) {
+  .neon-scrollbar-green::-webkit-scrollbar,
+  .neon-scrollbar-cyan::-webkit-scrollbar,
+  .neon-scrollbar-purple::-webkit-scrollbar {
+    width: 6px;
   }
 }
 
+/* ==============================================
+           EFECTOS NEÓN OPTIMIZADOS
+        ============================================== */
 @keyframes price-glow-green {
   0%,
   100% {
-    text-shadow: 0 0 5px #10b981, 0 0 10px #10b981, 0 0 15px #10b981,
-      0 0 20px #10b981;
-    filter: drop-shadow(0 0 10px #10b981);
+    text-shadow: 0 0 5px #10b981, 0 0 10px #10b981, 0 0 15px #10b981;
+    filter: drop-shadow(0 0 8px #10b981);
   }
   50% {
-    text-shadow: 0 0 10px #10b981, 0 0 20px #10b981, 0 0 30px #10b981,
-      0 0 40px #10b981;
-    filter: drop-shadow(0 0 20px #10b981);
+    text-shadow: 0 0 8px #10b981, 0 0 16px #10b981, 0 0 24px #10b981;
+    filter: drop-shadow(0 0 12px #10b981);
   }
 }
+
 @keyframes price-glow-cyan {
   0%,
   100% {
-    text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4, 0 0 15px #06b6d4,
-      0 0 20px #06b6d4;
-    filter: drop-shadow(0 0 10px #06b6d4);
+    text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4, 0 0 15px #06b6d4;
+    filter: drop-shadow(0 0 8px #06b6d4);
   }
   50% {
-    text-shadow: 0 0 10px #06b6d4, 0 0 20px #06b6d4, 0 0 30px #06b6d4,
-      0 0 40px #06b6d4;
-    filter: drop-shadow(0 0 20px #06b6d4);
+    text-shadow: 0 0 8px #06b6d4, 0 0 16px #06b6d4, 0 0 24px #06b6d4;
+    filter: drop-shadow(0 0 12px #06b6d4);
   }
 }
+
 @keyframes price-glow-purple {
   0%,
   100% {
-    text-shadow: 0 0 5px #a855f7, 0 0 10px #a855f7, 0 0 15px #a855f7,
-      0 0 20px #a855f7;
-    filter: drop-shadow(0 0 10px #a855f7);
+    text-shadow: 0 0 5px #a855f7, 0 0 10px #a855f7, 0 0 15px #a855f7;
+    filter: drop-shadow(0 0 8px #a855f7);
   }
   50% {
-    text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 30px #a855f7,
-      0 0 40px #a855f7;
-    filter: drop-shadow(0 0 20px #a855f7);
+    text-shadow: 0 0 8px #a855f7, 0 0 16px #a855f7, 0 0 24px #a855f7;
+    filter: drop-shadow(0 0 12px #a855f7);
   }
 }
 
 .price-neon-green {
-  animation: price-glow-green 2s ease-in-out infinite;
+  animation: price-glow-green 2.5s ease-in-out infinite;
 }
 .price-neon-cyan {
-  animation: price-glow-cyan 2s ease-in-out infinite;
+  animation: price-glow-cyan 2.5s ease-in-out infinite;
 }
 .price-neon-purple {
-  animation: price-glow-purple 2s ease-in-out infinite;
+  animation: price-glow-purple 2.5s ease-in-out infinite;
 }
 
-/* Firefox */
+/* Desactivar animaciones neón en móviles para mejor performance */
+@media (max-width: 768px) {
+  .price-neon-green,
+  .price-neon-cyan,
+  .price-neon-purple {
+    animation: none;
+  }
+}
+
+/* Firefox - Scrollbars */
 .neon-scrollbar-green {
   scrollbar-width: thin;
   scrollbar-color: #10b981 rgba(16, 185, 129, 0.1);
@@ -465,4 +514,44 @@
 .neon-scrollbar-purple {
   scrollbar-width: thin;
   scrollbar-color: #a855f7 rgba(168, 85, 247, 0.1);
+}
+
+/* ==============================================
+           OPTIMIZACIONES DE PERFORMANCE
+        ============================================== */
+
+/* Reducir motion en dispositivos con preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-card {
+    transition: none;
+  }
+
+  .price-neon-green,
+  .price-neon-cyan,
+  .price-neon-purple {
+    animation: none;
+  }
+
+  .card-content {
+    transition: none;
+  }
+}
+
+/* Optimización para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .card-content {
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Touch targets más grandes en móvil */
+@media (max-width: 768px) {
+  .carousel-card {
+    cursor: default;
+  }
+
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
