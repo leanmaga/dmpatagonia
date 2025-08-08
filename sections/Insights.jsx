@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import "../styles/insights.css";
 
 const Insights = () => {
   const [activeIndex, setActiveIndex] = useState(1);
@@ -20,7 +21,7 @@ const Insights = () => {
       price: "$299",
       originalPrice: "$599",
       color: "from-green-500 to-emerald-500",
-      scrollbarColor: "#10b981", // emerald-500
+      scrollbarColor: "#10b981",
       popular: false,
       badge: "Ideal para emprendedores",
       features: [
@@ -48,7 +49,7 @@ const Insights = () => {
       price: "$599",
       originalPrice: "$1,299",
       color: "from-cyan-500 to-blue-500",
-      scrollbarColor: "#06b6d4", // cyan-500
+      scrollbarColor: "#06b6d4",
       popular: true,
       badge: "Más completo",
       features: [
@@ -79,7 +80,7 @@ const Insights = () => {
       price: "$999",
       originalPrice: "$1,999",
       color: "from-purple-500 to-pink-500",
-      scrollbarColor: "#a855f7", // purple-500
+      scrollbarColor: "#a855f7",
       popular: false,
       badge: "Para empresas establecidas",
       features: [
@@ -183,350 +184,135 @@ const Insights = () => {
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
     if (position === 0) {
+      // Card activa (centro)
       return {
         transform: "translateX(0%) scale(1) rotateY(0deg)",
         zIndex: 20,
         opacity: 1,
       };
     } else if (position === -1) {
+      // Card izquierda
       return {
         transform: isMobile
-          ? "translateX(-80%) scale(0.7) rotateY(15deg)"
-          : "translateX(-60%) scale(0.8) rotateY(25deg)",
+          ? "translateX(-75%) scale(0.85) rotateY(15deg)"
+          : "translateX(-70%) scale(0.9) rotateY(20deg)",
         zIndex: 10,
-        opacity: isMobile ? 0.5 : 0.7,
+        opacity: isMobile ? 0.6 : 0.8,
       };
     } else if (position === 1) {
+      // Card derecha
       return {
         transform: isMobile
-          ? "translateX(80%) scale(0.7) rotateY(-15deg)"
-          : "translateX(60%) scale(0.8) rotateY(-25deg)",
+          ? "translateX(75%) scale(0.85) rotateY(-15deg)"
+          : "translateX(70%) scale(0.9) rotateY(-20deg)",
         zIndex: 10,
-        opacity: isMobile ? 0.5 : 0.7,
+        opacity: isMobile ? 0.6 : 0.8,
+      };
+    } else if (position === -2) {
+      // Cards más atrás (izquierda)
+      return {
+        transform: "translateX(-90%) scale(0.7) rotateY(35deg)",
+        zIndex: 5,
+        opacity: 0.3,
+      };
+    } else if (position === 2) {
+      // Cards más atrás (derecha)
+      return {
+        transform: "translateX(90%) scale(0.7) rotateY(-35deg)",
+        zIndex: 5,
+        opacity: 0.3,
       };
     } else {
+      // Cards completamente ocultas
       return {
-        transform: "translateX(0%) scale(0.6)",
+        transform: "translateX(0%) scale(0.5)",
         zIndex: 1,
         opacity: 0,
       };
     }
   };
 
-  // Función para obtener dimensiones responsivas de las cards
-  const getCardDimensions = () => {
-    if (typeof window !== "undefined") {
-      const width = window.innerWidth;
-      if (width < 480) {
-        return {
-          width: "280px",
-          height: "520px",
-          marginLeft: "-140px",
-          marginTop: "-260px",
-        };
-      } else if (width < 768) {
-        return {
-          width: "320px",
-          height: "570px",
-          marginLeft: "-160px",
-          marginTop: "-285px",
-        };
-      } else if (width < 1024) {
-        return {
-          width: "400px",
-          height: "700px",
-          marginLeft: "-200px",
-          marginTop: "-350px",
-        };
-      } else if (width < 1440) {
-        return {
-          width: "450px",
-          height: "750px",
-          marginLeft: "-225px",
-          marginTop: "-375px",
-        };
-      } else {
-        return {
-          width: "500px",
-          height: "800px",
-          marginLeft: "-250px",
-          marginTop: "-400px",
-        };
-      }
-    }
-    return {
-      width: "420px",
-      height: "570px",
-      marginLeft: "-160px",
-      marginTop: "-285px",
-    };
-  };
-
-  const [cardDimensions, setCardDimensions] = useState(getCardDimensions());
-
-  useEffect(() => {
-    const handleResize = () => {
-      setCardDimensions(getCardDimensions());
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <>
-      {/* Estilos CSS personalizados para scrollbars neón dinámicos */}
-      <style jsx>{`
-        .neon-scrollbar-green::-webkit-scrollbar {
-          width: 10px;
-        }
-        .neon-scrollbar-green::-webkit-scrollbar-track {
-          background: rgba(16, 185, 129, 0.1);
-          border-radius: 15px;
-          box-shadow: inset 0 0 5px rgba(16, 185, 129, 0.2);
-        }
-        .neon-scrollbar-green::-webkit-scrollbar-thumb {
-          background: linear-gradient(135deg, #10b981, #059669);
-          border-radius: 15px;
-          box-shadow: 0 0 10px #10b981, 0 0 20px #10b981, 0 0 30px #10b981,
-            inset 0 0 10px rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        .neon-scrollbar-green::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(135deg, #059669, #047857);
-          box-shadow: 0 0 20px #10b981, 0 0 35px #10b981, 0 0 50px #10b981,
-            inset 0 0 15px rgba(255, 255, 255, 0.2);
-          animation: neon-pulse-green 1.5s ease-in-out infinite alternate;
-        }
+    <section
+      className="insights-section relative overflow-hidden bg-gradient-to-b from-slate-900 to-black"
+      id="paquetes"
+    >
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-48 sm:w-64 md:w-80 lg:w-96 h-48 sm:h-64 md:h-80 lg:h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-48 sm:w-64 md:w-80 lg:w-96 h-48 sm:h-64 md:h-80 lg:h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+      </div>
 
-        .neon-scrollbar-cyan::-webkit-scrollbar {
-          width: 10px;
-        }
-        .neon-scrollbar-cyan::-webkit-scrollbar-track {
-          background: rgba(6, 182, 212, 0.1);
-          border-radius: 15px;
-          box-shadow: inset 0 0 5px rgba(6, 182, 212, 0.2);
-        }
-        .neon-scrollbar-cyan::-webkit-scrollbar-thumb {
-          background: linear-gradient(135deg, #06b6d4, #0891b2);
-          border-radius: 15px;
-          box-shadow: 0 0 10px #06b6d4, 0 0 20px #06b6d4, 0 0 30px #06b6d4,
-            inset 0 0 10px rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(6, 182, 212, 0.3);
-        }
-        .neon-scrollbar-cyan::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(135deg, #0891b2, #0e7490);
-          box-shadow: 0 0 20px #06b6d4, 0 0 35px #06b6d4, 0 0 50px #06b6d4,
-            inset 0 0 15px rgba(255, 255, 255, 0.2);
-          animation: neon-pulse-cyan 1.5s ease-in-out infinite alternate;
-        }
+      <div className="insights-container relative z-10">
+        {/* Header */}
+        <div className="insights-header">
+          <div className="flex items-center justify-center gap-2 sm:gap-4">
+            <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-r from-transparent to-cyan-400" />
+            <span className="text-cyan-400 font-medium tracking-wider uppercase text-xs sm:text-sm">
+              PatagoniaScript + D'Marketing
+            </span>
+            <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-l from-transparent to-cyan-400" />
+          </div>
 
-        .neon-scrollbar-purple::-webkit-scrollbar {
-          width: 10px;
-        }
-        .neon-scrollbar-purple::-webkit-scrollbar-track {
-          background: rgba(168, 85, 247, 0.1);
-          border-radius: 15px;
-          box-shadow: inset 0 0 5px rgba(168, 85, 247, 0.2);
-        }
-        .neon-scrollbar-purple::-webkit-scrollbar-thumb {
-          background: linear-gradient(135deg, #a855f7, #9333ea);
-          border-radius: 15px;
-          box-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 30px #a855f7,
-            inset 0 0 10px rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(168, 85, 247, 0.3);
-        }
-        .neon-scrollbar-purple::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(135deg, #9333ea, #7c3aed);
-          box-shadow: 0 0 20px #a855f7, 0 0 35px #a855f7, 0 0 50px #a855f7,
-            inset 0 0 15px rgba(255, 255, 255, 0.2);
-          animation: neon-pulse-purple 1.5s ease-in-out infinite alternate;
-        }
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
+            <span className="bg-gradient-to-r from-white via-cyan-200 to-blue-200 bg-clip-text text-transparent">
+              Desarrollo Web
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              + Diseño & Marketing
+            </span>
+          </h2>
 
-        /* Animaciones neón para scrollbars */
-        @keyframes neon-pulse-green {
-          0% {
-            box-shadow: 0 0 20px #10b981, 0 0 35px #10b981, 0 0 50px #10b981;
-          }
-          100% {
-            box-shadow: 0 0 25px #10b981, 0 0 45px #10b981, 0 0 65px #10b981;
-          }
-        }
-        @keyframes neon-pulse-cyan {
-          0% {
-            box-shadow: 0 0 20px #06b6d4, 0 0 35px #06b6d4, 0 0 50px #06b6d4;
-          }
-          100% {
-            box-shadow: 0 0 25px #06b6d4, 0 0 45px #06b6d4, 0 0 65px #06b6d4;
-          }
-        }
-        @keyframes neon-pulse-purple {
-          0% {
-            box-shadow: 0 0 20px #a855f7, 0 0 35px #a855f7, 0 0 50px #a855f7;
-          }
-          100% {
-            box-shadow: 0 0 25px #a855f7, 0 0 45px #a855f7, 0 0 65px #a855f7;
-          }
-        }
+          <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-4xl leading-relaxed">
+            <span className="text-cyan-400 font-semibold">
+              ¿Por qué elegir entre desarrollo web o diseño gráfico?
+            </span>
+            <br />
+            Fusionamos{" "}
+            <span className="text-cyan-400 font-semibold">
+              sitios web profesionales
+            </span>{" "}
+            con{" "}
+            <span className="text-purple-400 font-semibold">
+              identidad visual completa y gestión de redes
+            </span>{" "}
+            para crear tu presencia digital integral.
+          </p>
 
-        /* Animación para precios neón */
-        @keyframes price-glow-green {
-          0%,
-          100% {
-            text-shadow: 0 0 5px #10b981, 0 0 10px #10b981, 0 0 15px #10b981,
-              0 0 20px #10b981;
-            filter: drop-shadow(0 0 10px #10b981);
-          }
-          50% {
-            text-shadow: 0 0 10px #10b981, 0 0 20px #10b981, 0 0 30px #10b981,
-              0 0 40px #10b981;
-            filter: drop-shadow(0 0 20px #10b981);
-          }
-        }
-        @keyframes price-glow-cyan {
-          0%,
-          100% {
-            text-shadow: 0 0 5px #06b6d4, 0 0 10px #06b6d4, 0 0 15px #06b6d4,
-              0 0 20px #06b6d4;
-            filter: drop-shadow(0 0 10px #06b6d4);
-          }
-          50% {
-            text-shadow: 0 0 10px #06b6d4, 0 0 20px #06b6d4, 0 0 30px #06b6d4,
-              0 0 40px #06b6d4;
-            filter: drop-shadow(0 0 20px #06b6d4);
-          }
-        }
-        @keyframes price-glow-purple {
-          0%,
-          100% {
-            text-shadow: 0 0 5px #a855f7, 0 0 10px #a855f7, 0 0 15px #a855f7,
-              0 0 20px #a855f7;
-            filter: drop-shadow(0 0 10px #a855f7);
-          }
-          50% {
-            text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 30px #a855f7,
-              0 0 40px #a855f7;
-            filter: drop-shadow(0 0 20px #a855f7);
-          }
-        }
-
-        .price-neon-green {
-          animation: price-glow-green 2s ease-in-out infinite;
-        }
-        .price-neon-cyan {
-          animation: price-glow-cyan 2s ease-in-out infinite;
-        }
-        .price-neon-purple {
-          animation: price-glow-purple 2s ease-in-out infinite;
-        }
-
-        /* Para Firefox */
-        .neon-scrollbar-green {
-          scrollbar-width: thin;
-          scrollbar-color: #10b981 rgba(16, 185, 129, 0.1);
-        }
-        .neon-scrollbar-cyan {
-          scrollbar-width: thin;
-          scrollbar-color: #06b6d4 rgba(6, 182, 212, 0.1);
-        }
-        .neon-scrollbar-purple {
-          scrollbar-width: thin;
-          scrollbar-color: #a855f7 rgba(168, 85, 247, 0.1);
-        }
-      `}</style>
-
-      <section
-        className="relative overflow-hidden py-12 sm:py-16 md:py-20 px-4 bg-gradient-to-b from-slate-900 to-black"
-        id="paquetes"
-      >
-        {/* Background Effects */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-cyan-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-purple-500/10 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          {/* Header mejorado */}
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <div className="flex items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
-              <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-r from-transparent to-cyan-400" />
-              <span className="text-cyan-400 font-medium tracking-wider uppercase text-xs sm:text-sm">
-                PatagoniaScript + D'Marketing
-              </span>
-              <div className="w-8 sm:w-12 md:w-16 h-px bg-gradient-to-l from-transparent to-cyan-400" />
+          {/* Value proposition */}
+          <div className="insights-value-grid">
+            <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-slate-700/50">
+              <div className="text-cyan-400 font-bold text-lg sm:text-xl mb-1">
+                +6 Años
+              </div>
+              <div className="text-gray-300 text-xs sm:text-sm">
+                Experiencia combinada
+              </div>
             </div>
-
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-              <span className="bg-gradient-to-r from-white via-cyan-200 to-blue-200 bg-clip-text text-transparent">
-                Desarrollo Web
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-                + Diseño & Marketing
-              </span>
-            </h2>
-
-            <p className="text-sm sm:text-base md:text-lg text-gray-300 max-w-4xl mx-auto leading-relaxed px-4">
-              <span className="text-cyan-400 font-semibold">
-                ¿Por qué elegir entre desarrollo web o diseño gráfico?
-              </span>
-              <br />
-              Fusionamos{" "}
-              <span className="text-cyan-400 font-semibold">
-                sitios web profesionales
-              </span>{" "}
-              con{" "}
-              <span className="text-purple-400 font-semibold">
-                identidad visual completa y gestión de redes
-              </span>{" "}
-              para crear tu presencia digital integral.
-            </p>
-
-            {/* Value proposition actualizada */}
-            <div className="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 max-w-4xl mx-auto px-4">
-              <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-slate-700/50">
-                <div className="text-cyan-400 font-bold text-lg sm:text-xl mb-1">
-                  +6 Años
-                </div>
-                <div className="text-gray-300 text-xs sm:text-sm">
-                  Experiencia combinada
-                </div>
+            <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-slate-700/50">
+              <div className="text-purple-400 font-bold text-lg sm:text-xl mb-1">
+                Todo Incluido
               </div>
-              <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-slate-700/50">
-                <div className="text-purple-400 font-bold text-lg sm:text-xl mb-1">
-                  Todo Incluido
-                </div>
-                <div className="text-gray-300 text-xs sm:text-sm">
-                  Web + diseño + marketing
-                </div>
+              <div className="text-gray-300 text-xs sm:text-sm">
+                Web + diseño + marketing
               </div>
-              <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-slate-700/50">
-                <div className="text-green-400 font-bold text-lg sm:text-xl mb-1">
-                  2 Equipos
-                </div>
-                <div className="text-gray-300 text-xs sm:text-sm">
-                  Especializados trabajando juntos
-                </div>
+            </div>
+            <div className="bg-slate-800/40 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-slate-700/50">
+              <div className="text-green-400 font-bold text-lg sm:text-xl mb-1">
+                2 Equipos
+              </div>
+              <div className="text-gray-300 text-xs sm:text-sm">
+                Especializados trabajando juntos
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Carousel 3D */}
+        {/* Carousel 3D */}
+        <div className="carousel-container">
           <div
-            className="relative w-full max-w-6xl mx-auto mb-8 sm:mb-12 select-none"
-            style={{
-              perspective: "1200px",
-              height:
-                typeof window !== "undefined" && window.innerWidth < 480
-                  ? "540px"
-                  : typeof window !== "undefined" && window.innerWidth < 768
-                  ? "590px"
-                  : typeof window !== "undefined" && window.innerWidth < 1024
-                  ? "720px"
-                  : typeof window !== "undefined" && window.innerWidth < 1440
-                  ? "770px"
-                  : "820px",
-            }}
+            className="carousel-3d"
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
@@ -534,15 +320,11 @@ const Insights = () => {
             {/* Navigation buttons */}
             <button
               onClick={goToPrevious}
-              className="absolute -left-16 top-1/2 transform -translate-y-1/2 z-30 
-                         bg-slate-800/60 hover:bg-slate-700/80 backdrop-blur-sm
-                         text-white p-3 rounded-full shadow-lg
-                         transition-all duration-300 hover:scale-110 opacity-70 hover:opacity-100
-                         hidden xl:flex items-center justify-center"
+              className="nav-buttons prev"
               aria-label="Paquete anterior"
             >
               <svg
-                className="w-5 h-5"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -558,15 +340,11 @@ const Insights = () => {
 
             <button
               onClick={goToNext}
-              className="absolute -right-16 top-1/2 transform -translate-y-1/2 z-30
-                         bg-slate-800/60 hover:bg-slate-700/80 backdrop-blur-sm
-                         text-white p-3 rounded-full shadow-lg
-                         transition-all duration-300 hover:scale-110 opacity-70 hover:opacity-100
-                         hidden xl:flex items-center justify-center"
+              className="nav-buttons next"
               aria-label="Siguiente paquete"
             >
               <svg
-                className="w-5 h-5"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -585,20 +363,18 @@ const Insights = () => {
               const isActive = index === activeIndex;
               const cardStyle = getCardStyle(index);
 
-              // Obtener la clase de scrollbar según el color del paquete
               const getScrollbarClass = (color) => {
                 if (color.includes("green")) return "neon-scrollbar-green";
                 if (color.includes("cyan")) return "neon-scrollbar-cyan";
                 if (color.includes("purple")) return "neon-scrollbar-purple";
-                return "neon-scrollbar-cyan"; // fallback
+                return "neon-scrollbar-cyan";
               };
 
-              // Obtener la clase de precio neón según el color del paquete
               const getPriceNeonClass = (color) => {
                 if (color.includes("green")) return "price-neon-green";
                 if (color.includes("cyan")) return "price-neon-cyan";
                 if (color.includes("purple")) return "price-neon-purple";
-                return "price-neon-cyan"; // fallback
+                return "price-neon-cyan";
               };
 
               const scrollbarClass = getScrollbarClass(pkg.color);
@@ -609,15 +385,8 @@ const Insights = () => {
               return (
                 <div
                   key={pkg.id}
-                  className="absolute top-1/2 left-1/2 cursor-pointer"
-                  style={{
-                    ...cardStyle,
-                    ...cardDimensions,
-                    transformOrigin: "center center",
-                    transformStyle: "preserve-3d",
-                    transition: "all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                    pointerEvents: isDragging ? "none" : "auto",
-                  }}
+                  className={`carousel-card ${isDragging ? "dragging" : ""}`}
+                  style={cardStyle}
                   onClick={() =>
                     !isActive && !isDragging && setActiveIndex(index)
                   }
@@ -632,31 +401,22 @@ const Insights = () => {
                   )}
 
                   <div
-                    className={`relative h-full bg-gradient-to-br from-slate-800/60 to-slate-900/80 backdrop-blur-xl 
-                    border ${
+                    className={`card-content ${
                       pkg.popular && isActive
                         ? "border-cyan-400/60 shadow-cyan-500/30"
-                        : "border-slate-700/50"
-                    } 
-                    rounded-xl sm:rounded-2xl shadow-2xl transition-all duration-700 flex flex-col overflow-hidden
-                    ${
-                      isActive
-                        ? "hover:shadow-cyan-500/30 hover:border-cyan-400/70"
-                        : "hover:border-slate-600/60"
-                    }
-                  `}
+                        : ""
+                    }`}
                   >
                     {/* Package header */}
-                    <div className="text-center p-3 sm:p-4 md:p-8 lg:p-10 pb-2 sm:pb-4 md:pb-6">
-                      <div className="mb-2 sm:mb-3 md:mb-4 lg:mb-5">
+                    <div className="card-header">
+                      <div>
                         <span className="bg-gradient-to-r from-slate-600 to-slate-700 text-gray-300 px-2 sm:px-3 md:px-4 py-1 md:py-1.5 rounded-full text-xs md:text-sm font-medium">
                           {pkg.badge}
                         </span>
                       </div>
 
-                      {/* Package Name */}
                       <h3
-                        className={`font-bold text-white mb-2 md:mb-4 lg:mb-5 ${
+                        className={`font-bold text-white ${
                           isActive
                             ? "text-lg sm:text-xl md:text-2xl lg:text-3xl"
                             : "text-sm sm:text-base md:text-lg lg:text-xl"
@@ -665,9 +425,8 @@ const Insights = () => {
                         {pkg.name}
                       </h3>
 
-                      {/* Subtitle */}
                       <p
-                        className={`text-gray-400 mb-3 sm:mb-4 md:mb-6 lg:mb-7 leading-relaxed px-2 md:px-4 ${
+                        className={`text-gray-400 leading-relaxed ${
                           isActive
                             ? "text-sm sm:text-base md:text-lg"
                             : "text-xs sm:text-sm md:text-base"
@@ -677,7 +436,7 @@ const Insights = () => {
                       </p>
 
                       {/* Price section */}
-                      <div className="mb-3 sm:mb-4 md:mb-6 lg:mb-8">
+                      <div>
                         <div className="flex items-center justify-center gap-2 md:gap-3 mb-1 md:mb-2">
                           <span
                             className={`text-gray-500 line-through ${
@@ -698,9 +457,9 @@ const Insights = () => {
                               pkg.color
                             } bg-clip-text text-transparent ${
                               isActive
-                                ? " sm:text-3xl md:text-4xl text-5xl"
+                                ? "text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
                                 : "text-xl sm:text-2xl md:text-3xl lg:text-4xl"
-                            }`}
+                            } ${priceNeonClass}`}
                           >
                             {pkg.price}
                           </span>
@@ -718,12 +477,11 @@ const Insights = () => {
 
                       {/* Deliverables preview */}
                       {isActive && (
-                        <div className="grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 text-xs p-2 sm:p-3 md:p-4 lg:p-5">
+                        <div className="grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 text-xs">
                           <div
-                            className="bg-cyan-500/10 rounded-lg p-4 sm:p-2 md:p-3 lg:p-4 border border-cyan-500/20"
+                            className="bg-cyan-500/10 rounded-lg p-2 sm:p-3 md:p-4 border border-cyan-500/20"
                             style={{
-                              boxShadow:
-                                "0 0 10px rgba(6, 182, 212, 0.2), 0 0 20px rgba(6, 182, 212, 0.1)",
+                              boxShadow: "0 0 10px rgba(6, 182, 212, 0.2)",
                             }}
                           >
                             <div
@@ -740,10 +498,9 @@ const Insights = () => {
                             </div>
                           </div>
                           <div
-                            className="bg-purple-500/10 rounded-lg p-4 sm:p-2 md:p-3 lg:p-4  border border-purple-500/20"
+                            className="bg-purple-500/10 rounded-lg p-2 sm:p-3 md:p-4 border border-purple-500/20"
                             style={{
-                              boxShadow:
-                                "0 0 10px rgba(168, 85, 247, 0.2), 0 0 20px rgba(168, 85, 247, 0.1)",
+                              boxShadow: "0 0 10px rgba(168, 85, 247, 0.2)",
                             }}
                           >
                             <div
@@ -763,16 +520,11 @@ const Insights = () => {
                       )}
                     </div>
 
-                    {/* Features list con scrollbar neón personalizado */}
-                    <div
-                      className={`flex-1 p-5 m-5 overflow-y-auto ${scrollbarClass}`}
-                    >
-                      <ul className="space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-4">
+                    {/* Features list */}
+                    <div className={`card-features ${scrollbarClass}`}>
+                      <ul className="features-list">
                         {pkg.features.map((feature, featureIndex) => (
-                          <li
-                            key={featureIndex}
-                            className="flex items-start gap-2 md:gap-3 lg:gap-4"
-                          >
+                          <li key={featureIndex} className="feature-item">
                             <div
                               className={`rounded-full bg-gradient-to-r ${
                                 pkg.color
@@ -815,7 +567,7 @@ const Insights = () => {
                     </div>
 
                     {/* CTA Button */}
-                    <div className="p-3 sm:p-4 md:p-8 lg:p-10 pt-1 sm:pt-2 md:pt-4">
+                    <div className="card-cta">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -827,12 +579,11 @@ const Insights = () => {
                         }}
                         className={`w-full rounded-lg sm:rounded-xl font-semibold text-white bg-gradient-to-r ${
                           pkg.color
-                        } shadow-lg transition-all duration-300 transform flex items-center justify-center gap-2 sm:gap-3 md:gap-4 relative overflow-hidden
-                          ${
-                            isActive
-                              ? "py-2.5 sm:py-3 md:py-4 lg:py-5 px-3 sm:px-4 md:px-6 lg:px-8 text-base sm:text-lg md:text-xl lg:text-2xl hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25"
-                              : "py-1.5 sm:py-2 md:py-3 px-2 sm:px-3 md:px-4 text-sm sm:text-base md:text-lg opacity-75"
-                          }`}
+                        } shadow-lg transition-all duration-300 transform flex items-center justify-center gap-2 sm:gap-3 md:gap-4 relative overflow-hidden ${
+                          isActive
+                            ? "py-2.5 sm:py-3 md:py-4 lg:py-5 px-3 sm:px-4 md:px-6 lg:px-8 text-base sm:text-lg md:text-xl lg:text-2xl hover:scale-105 hover:shadow-2xl"
+                            : "py-1.5 sm:py-2 md:py-3 px-2 sm:px-3 md:px-4 text-sm sm:text-base md:text-lg opacity-75"
+                        }`}
                         style={{
                           filter: isActive
                             ? `drop-shadow(0 0 15px ${pkg.scrollbarColor})`
@@ -876,7 +627,7 @@ const Insights = () => {
                   {/* Partículas flotantes para cards activas */}
                   {isActive && (
                     <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl sm:rounded-2xl">
-                      {/* Partículas principales del color del paquete */}
+                      {/* Efectos de partículas con motion */}
                       {[...Array(8)].map((_, i) => (
                         <motion.div
                           key={`particle-${i}`}
@@ -906,135 +657,15 @@ const Insights = () => {
                           }}
                         />
                       ))}
-
-                      {/* Partículas secundarias más pequeñas */}
-                      {[...Array(6)].map((_, i) => (
-                        <motion.div
-                          key={`mini-particle-${i}`}
-                          className={`absolute w-1 h-1 rounded-full ${
-                            pkg.color.includes("green")
-                              ? "bg-green-300"
-                              : pkg.color.includes("cyan")
-                              ? "bg-blue-300"
-                              : "bg-pink-300"
-                          }`}
-                          style={{
-                            right: `${15 + i * 12}%`,
-                            bottom: `${20 + (i % 2) * 30}%`,
-                            filter: `drop-shadow(0 0 2px ${pkg.scrollbarColor})`,
-                          }}
-                          animate={{
-                            y: [-15, -30, -15],
-                            x: [5, -5, 5],
-                            opacity: [0.2, 0.8, 0.2],
-                            rotate: [0, 360, 0],
-                          }}
-                          transition={{
-                            duration: 4 + Math.random(),
-                            repeat: Infinity,
-                            delay: i * 0.5,
-                            ease: "easeInOut",
-                          }}
-                        />
-                      ))}
-
-                      {/* Efecto de brillo orbital */}
-                      <motion.div
-                        className={`absolute w-20 h-20 rounded-full ${
-                          pkg.color.includes("green")
-                            ? "bg-emerald-400/10"
-                            : pkg.color.includes("cyan")
-                            ? "bg-cyan-400/10"
-                            : "bg-purple-400/10"
-                        } blur-xl`}
-                        style={{
-                          top: "20%",
-                          right: "10%",
-                          filter: `drop-shadow(0 0 20px ${pkg.scrollbarColor})`,
-                        }}
-                        animate={{
-                          scale: [0.8, 1.2, 0.8],
-                          opacity: [0.3, 0.7, 0.3],
-                          rotate: [0, 180, 360],
-                        }}
-                        transition={{
-                          duration: 6,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
-
-                      {/* Segundo efecto de brillo orbital */}
-                      <motion.div
-                        className={`absolute w-16 h-16 rounded-full ${
-                          pkg.color.includes("green")
-                            ? "bg-green-300/10"
-                            : pkg.color.includes("cyan")
-                            ? "bg-blue-300/10"
-                            : "bg-pink-300/10"
-                        } blur-lg`}
-                        style={{
-                          bottom: "15%",
-                          left: "15%",
-                          filter: `drop-shadow(0 0 15px ${pkg.scrollbarColor})`,
-                        }}
-                        animate={{
-                          scale: [1.2, 0.8, 1.2],
-                          opacity: [0.2, 0.6, 0.2],
-                          rotate: [360, 180, 0],
-                        }}
-                        transition={{
-                          duration: 5,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 1,
-                        }}
-                      />
                     </div>
                   )}
                 </div>
               );
             })}
           </div>
-
-          {/* Navigation indicators */}
-          <div className="text-center">
-            {/* Mobile swipe indicator */}
-            <div className="mb-4 sm:mb-6 block xl:hidden">
-              <p className="text-gray-400 text-xs sm:text-sm flex items-center justify-center gap-2">
-                <span className="animate-bounce">👈</span>
-                Desliza para ver todos los paquetes
-                <span className="animate-bounce">👉</span>
-              </p>
-            </div>
-
-            {/* Desktop keyboard indicator */}
-            <div className="mb-4 sm:mb-6 hidden xl:block">
-              <p className="text-gray-500 text-xs flex items-center justify-center gap-2">
-                <span>←</span> Usa las flechas del teclado para navegar{" "}
-                <span>→</span>
-              </p>
-            </div>
-
-            {/* Dots indicators */}
-            <div className="flex justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
-              {fusionPackages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveIndex(index)}
-                  className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-                    index === activeIndex
-                      ? "bg-cyan-400 scale-125 shadow-lg shadow-cyan-400/50"
-                      : "bg-gray-600 hover:bg-gray-400"
-                  }`}
-                  aria-label={`Ir al paquete ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 
