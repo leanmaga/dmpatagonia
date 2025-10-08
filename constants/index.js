@@ -47,9 +47,19 @@ export const projects = [
     id: "world-6",
     imgUrl: "/globdeco.png",
     title: "Glob Deco",
-    subtitle: "Decoración con globos para eventos sociales y temáticos",
+    subtitle:
+      "Decoración con globos para eventos sociales y temáticos. Decoración de globos, Globos personalizados, Arcos de globos, Globos con helio, Alquiler de candy bar",
     tags: ["Eventos", "Decoración", "Landing Page"],
     url: "https://glob-deco.vercel.app/",
+  },
+  {
+    id: "world-6",
+    imgUrl: "/solcampestre.png",
+    title: "Sol Campestre",
+    subtitle:
+      "Sol Campestre combinamos la calidad y el cuidado de los productos rurales con la eficiencia y rapidez que necesita la vida urbana. Cada día preparamos milanesas frescas y seleccionamos los mejores pollos para que tengas productos premium listos para tu freezer.",
+    tags: ["E-commerce", "Comercio Electronico", "Mercado Pago"],
+    url: "https://www.solcampestre.com/",
   },
 ];
 
