@@ -78,7 +78,7 @@ Abrí [http://localhost:3000](http://localhost:3000) en tu navegador.
 ### 🤝 Alianza
 
 - **PatagoniaScript** — desarrollo web, Leandro Magallanes y José Alfredo Zambrano Aguirre
-- **D'Marketing Creativo** — diseño e identidad visual, gestión de redes, by Oriana Magallanes
+- **D'Marketing Creativo** — diseño e identidad visual, gestión de redes, by Daiana Magallanes
 
 ---
 
